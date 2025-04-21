@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Каталог товаров</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Купить {{naming}}</title>
+    <link rel="stylesheet" href="style.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -22,13 +25,65 @@
         </div>
       </nav>
     </header>
-    <main role="main" class="container">
-        {% block content %}{% endblock %}
-    </main>
-    <div id="search-container">
-        <input type="text" id="search-input" placeholder="Поиск по товарам">
+    <a href="/" class="back-button">На главную</a>
+    <div class="container">
+        <div class="product_card">
+            <img src={{src}} alt={{naming}}>
+            <div class="info">
+                <h2>{{naming}}</h2>
+                <p class="description">
+                    {{description}}
+                </p>
+                <div class="specs">
+                    <h3>Характеристики:</h3>
+                    <ul>
+                        <li><strong>Размеры:</strong> {{proportions}}</li>
+                        <li><strong>Вес:</strong> {{weight}}</li>
+                        <li><strong>Год релиза:</strong> {{year}}</li>
+                        <li><strong>{{feature_1}}:</strong> {{to_feature_1}}</li>
+                        <li><strong>{{feature_2}}:</strong> {{to_feature_2}}</li>
+                        <li><strong>{{feature_3}}:</strong> {{to_feature_3}}</li>
+                        <li><strong>{{feature_4}}:</strong> {{to_feature_4}}</li>
+                        <li><strong>{{feature_5}}:</strong> {{to_feature_5}}</li>
+                        <li><strong>{{feature_6}}:</strong> {{to_feature_6}}</li>
+                        <li><strong>{{feature_7}}:</strong> {{to_feature_7}}</li>
+                        <li><strong>{{feature_8}}:</strong> {{to_feature_8}}</li>
+                        <li><strong>{{feature_9}}:</strong> {{to_feature_9}}</li>
+                    </ul>
+                </div>
+                <div class="price">
+                    <span class="price-value">{{price}} руб.</span>
+                </div>
+                <button class="add-to-cart">Добавить в корзину</button>
+            </div>
+        </div>
     </div>
-    <ul class="products clearfix">
+    <hr>
+    <h1>Отзывы</h1>
+    {% if current_user.is_authenticated %}
+        <a href="reviews" class="btn btn-secondary">Добавить отзыв</a>
+    {% endif %}
+
+    {% for item in reviews %}
+        <div class="col-md6 border rounded">
+            <h2>{{ item.title }}</h2>
+            <div>
+                {{ item.content }}
+            </div>
+            <div>
+                Автор - {{ item.user.name }}, Дата написания - {{ item.created_date }}
+            </div>
+            {% if current_user.is_authenticated and current_user == item.user %}
+                <div>
+                    <a href="/reviews/{{ item.id }}" class="btn btn-warning">Изменить</a>
+                    <a href="/reviews_delete/{{ item.id }}" class="btn btn-danger">Удалить</a>
+                </div>
+            {% endif %}
+
+        </div>
+    {% endfor %}
+<hr>
+<ul class="products clearfix">
         <li class="product-wrapper">
             <a href="/I5-13600KF_BOX" class="product">
                 <div class="product-photo">
@@ -102,23 +157,8 @@
               </a>
           </li>
       </ul>
-<script>
-        const searchInput = document.getElementById('search-input');
-        const products = document.querySelectorAll('.product');
-
-        searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase();
-            products.forEach(product => {
-                const productName = product.querySelector('p').textContent.toLowerCase();
-                if (productName.includes(searchTerm)) {
-                    product.parentElement.style.display = 'list-item';
-                } else {
-                    product.parentElement.style.display = 'none';
-                }
-            });
-        });
-</script>
 </body>
 </html>
+<link href="static/css/product.css" rel="stylesheet" type="text/css">
 <link href="static/css/catalog.css" rel="stylesheet" type="text/css">
-<link href="static/css/search.css" rel="stylesheet" type="text/css">
+<link href="static/css/button.css" rel="stylesheet" type="text/css">
