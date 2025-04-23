@@ -15,6 +15,7 @@ app.config['SECRET_KEY'] = 'a4siuhd7asd7123jas851ks91aksj18kmmz912mx217'
 
 
 @app.route('/')
+@app.route('/index')
 @app.route('/catalog')
 def catalog():
     return render_template('catalog.html')
@@ -83,7 +84,6 @@ def add_reviews():
         reviews = Reviews()
         reviews.title = form.title.data
         reviews.content = form.content.data
-        reviews.is_private = form.is_private.data
         reviews.product = session.get('url')
         current_user.reviews.append(reviews)
 
@@ -107,7 +107,6 @@ def edit_reviews(id):
         if reviews:
             form.title.data = reviews.title
             form.content.data = reviews.content
-            form.is_private.data = reviews.is_private
         else:
             abort(404)
 
@@ -119,7 +118,6 @@ def edit_reviews(id):
         if reviews:
             reviews.title = form.title.data
             reviews.content = form.content.data
-            reviews.is_private = form.is_private.data
             db_sess.commit()
             return redirect('/')
         else:
@@ -150,8 +148,7 @@ def i5_13600kf_box():
     url = request.url
     session['url'] = url
     db_sess = db_session.create_session()
-    reviews = db_sess.query(Reviews).filter(Reviews.is_private != True,
-                                            Reviews.product == url)
+    reviews = db_sess.query(Reviews).filter(Reviews.product == url)
     return render_template('product.html',
                            reviews=reviews,
                            src='static/images/i5.jpg',
@@ -186,8 +183,7 @@ def i7_13700kf_box():
     url = request.url
     session['url'] = url
     db_sess = db_session.create_session()
-    reviews = db_sess.query(Reviews).filter(Reviews.is_private != True,
-                                            Reviews.product == url)
+    reviews = db_sess.query(Reviews).filter(Reviews.product == url)
     return render_template('product.html',
                            reviews=reviews,
                            src='static/images/i7.jpg',
@@ -222,8 +218,7 @@ def i9_13900kf_box():
     url = request.url
     session['url'] = url
     db_sess = db_session.create_session()
-    reviews = db_sess.query(Reviews).filter(Reviews.is_private != True,
-                                            Reviews.product == url)
+    reviews = db_sess.query(Reviews).filter(Reviews.product == url)
     return render_template('product.html',
                            reviews=reviews,
                            src='static/images/i9.jpg',
@@ -258,8 +253,7 @@ def asus_prime_b760m_k_d4():
     url = request.url
     session['url'] = url
     db_sess = db_session.create_session()
-    reviews = db_sess.query(Reviews).filter(Reviews.is_private != True,
-                                            Reviews.product == url)
+    reviews = db_sess.query(Reviews).filter(Reviews.product == url)
     return render_template('product.html',
                            reviews=reviews,
                            src='static/images/b760.jpg',
@@ -294,8 +288,7 @@ def asus_tuf_gaming_b760m_btf_wifi_d4():
     url = request.url
     session['url'] = url
     db_sess = db_session.create_session()
-    reviews = db_sess.query(Reviews).filter(Reviews.is_private != True,
-                                            Reviews.product == url)
+    reviews = db_sess.query(Reviews).filter(Reviews.product == url)
     return render_template('product.html',
                            reviews=reviews,
                            src='static/images/b760_tuf.jpg',
@@ -330,8 +323,7 @@ def asus_rog_maximus_z790_apex_encore():
     url = request.url
     session['url'] = url
     db_sess = db_session.create_session()
-    reviews = db_sess.query(Reviews).filter(Reviews.is_private != True,
-                                            Reviews.product == url)
+    reviews = db_sess.query(Reviews).filter(Reviews.product == url)
     return render_template('product.html',
                            reviews=reviews,
                            src='static/images/z790.png',
@@ -366,8 +358,7 @@ def asus_geforce_rtx_4070_ti_tuf_gaming_oc_edition():
     url = request.url
     session['url'] = url
     db_sess = db_session.create_session()
-    reviews = db_sess.query(Reviews).filter(Reviews.is_private != True,
-                                            Reviews.product == url)
+    reviews = db_sess.query(Reviews).filter(Reviews.product == url)
     return render_template('product.html',
                            reviews=reviews,
                            src='static/images/4070ti.jpg',
@@ -402,8 +393,7 @@ def asus_geforce_rtx_4090_rog_strix_oc_edition():
     url = request.url
     session['url'] = url
     db_sess = db_session.create_session()
-    reviews = db_sess.query(Reviews).filter(Reviews.is_private != True,
-                                            Reviews.product == url)
+    reviews = db_sess.query(Reviews).filter(Reviews.product == url)
     return render_template('product.html',
                            reviews=reviews,
                            src='static/images/4090.jpg',
